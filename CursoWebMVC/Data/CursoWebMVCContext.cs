@@ -14,6 +14,8 @@ namespace CursoWebMVC.Data
         {
         }
 
-        public DbSet<CursoWebMVC.Models.Department> Department { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<Department> SalesRecord { get; set; }
+        public DbSet<Department> Saller { get; set; }
     }
 }
