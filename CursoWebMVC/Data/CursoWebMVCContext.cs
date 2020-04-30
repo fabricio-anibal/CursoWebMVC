@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using CursoWebMVC.Models;
 
-namespace CursoWebMVC.Data
+namespace CursoWebMVC.Models
 {
     public class CursoWebMVCContext : DbContext
     {
@@ -15,7 +14,7 @@ namespace CursoWebMVC.Data
         }
 
         public DbSet<Department> Department { get; set; }
-        public DbSet<Department> SalesRecord { get; set; }
-        public DbSet<Department> Saller { get; set; }
+        public DbSet<SalesRecord> SalesRecord { get; set; }
+        public DbSet<Saller> Saller { get; set; }
     }
 }
