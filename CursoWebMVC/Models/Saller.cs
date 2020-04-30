@@ -23,7 +23,7 @@ namespace CursoWebMVC.Models
         public Saller(int id, string name, string email, DateTime birthDate, double baseSalary, Department department)
         {
             Id = id;
-            Name = name;
+            Name  = name;
             Email = email;
             BirthDate = birthDate;
             BaseSalary = baseSalary;

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using CursoWebMVC.Data;
 using CursoWebMVC.Models;
+using CursoWebMVC.Services;
 
 namespace CursoWebMVC
 {
@@ -42,6 +43,7 @@ namespace CursoWebMVC
                         builder.MigrationsAssembly("CursoWebMVC")));
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<SallerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
