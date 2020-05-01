@@ -22,7 +22,6 @@ namespace CursoWebMVC.Services
 
         public void Insert(Saller saller)
         {
-            saller.Department = _context.Department.First();
             _context.Add(saller);
             _context.SaveChanges();
         }

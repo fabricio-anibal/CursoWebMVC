@@ -5,15 +5,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CursoWebMVC.Services;
 using CursoWebMVC.Models;
+using CursoWebMVC.Models.ViewModels;
 
 namespace CursoWebMVC.Controllers
 {
     public class SallersController : Controller
     {
         private readonly SallerService _sallerService;
+        private readonly DepartmentService _departmentService;
 
-        public SallersController(SallerService sallerService)
+        public SallersController(SallerService sallerService, DepartmentService departmentService)
         {
+            _departmentService = departmentService;
             _sallerService = sallerService;
         }
         
@@ -25,7 +28,9 @@ namespace CursoWebMVC.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departments = _departmentService.FindAll();
+            var viewModel = new SellerFormViewModel { Departments = departments };
+            return View(viewModel);
         }
 
         [HttpPost]
