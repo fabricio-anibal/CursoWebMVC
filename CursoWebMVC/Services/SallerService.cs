@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CursoWebMVC.Models;
 using Microsoft.EntityFrameworkCore;
+using CursoWebMVC.Services.Exceptions;
 
 namespace CursoWebMVC.Services
 {
@@ -37,6 +38,24 @@ namespace CursoWebMVC.Services
             var obj = _context.Saller.Find(id);
             _context.Saller.Remove(obj);
             _context.SaveChanges();
+        }
+
+        public void Update(Saller obj)
+        {
+            if (!_context.Saller.Any(x => x.Id == obj.Id))
+            {
+                throw new NotFoundException("ID not found");
+            }
+
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+            catch(DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyExceprion(e.Message);
+            }
         }
 
 
