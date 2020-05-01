@@ -7,7 +7,7 @@
 <h2>@ViewData["Title"]</h2>
 
 <h4>Seller</h4>
-<hr/>
+<hr />
 
 <div class="row">
     <div class="col-md-4">
@@ -15,18 +15,22 @@
             <div class="form-group">
                 <label asp-for="Saller.Name" class="control-label"></label>
                 <input asp-for="Saller.Name" class="form-control" />
+                <span asp-validation-for="Saller.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Saller.Email" class="control-label"></label>
                 <input asp-for="Saller.Email" class="form-control" />
+                <span asp-validation-for="Saller.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Saller.BirthDate" class="control-label"></label>
                 <input asp-for="Saller.BirthDate" class="form-control" />
+                <span asp-validation-for="Saller.BirthDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Saller.BaseSalary" class="control-label"></label>
                 <input asp-for="Saller.BaseSalary" class="form-control" />
+                <span asp-validation-for="Saller.BaseSalary" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Saller.DepartmentId" class="control-label"></label>
@@ -39,3 +43,7 @@
     </div>
 </div>
 
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
