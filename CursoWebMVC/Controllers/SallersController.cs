@@ -22,5 +22,18 @@ namespace CursoWebMVC.Controllers
             IEnumerable<Saller> list = _sallerService.findAll();
             return View(list);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Saller saller)
+        {
+            _sallerService.Insert(saller);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

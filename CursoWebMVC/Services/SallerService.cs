@@ -19,6 +19,12 @@ namespace CursoWebMVC.Services
         {
             return _context.Saller.ToList();
         }
+
+        public void Insert(Saller saller)
+        {
+            _context.Add(saller);
+            _context.SaveChanges();
+        }
             
 
 
