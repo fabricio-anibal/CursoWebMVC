@@ -7,6 +7,7 @@ using CursoWebMVC.Services;
 using CursoWebMVC.Models;
 using CursoWebMVC.Models.ViewModels;
 using CursoWebMVC.Services.Exceptions;
+using System.Diagnostics;
 
 namespace CursoWebMVC.Controllers
 {
@@ -46,13 +47,13 @@ namespace CursoWebMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided"});
             }
 
             var obj = _sallerService.FindById(id.Value);
             if(obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             return View(obj);
@@ -70,13 +71,13 @@ namespace CursoWebMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
             var obj = _sallerService.FindById(id.Value);
             if (obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             return View(obj);
@@ -86,13 +87,13 @@ namespace CursoWebMVC.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
             var obj = _sallerService.FindById(id.Value);
             if(obj == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
             List<Department> departments = _departmentService.FindAll();
@@ -106,7 +107,7 @@ namespace CursoWebMVC.Controllers
         {
             if(id != saller.Id)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             }
 
             try
@@ -116,12 +117,22 @@ namespace CursoWebMVC.Controllers
             }
             catch(NotFoundException e)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error), new { message = e.Message });
             }
             catch(DbConcurrencyExceprion dbE)
             {
-                return BadRequest();
+                return RedirectToAction(nameof(Error), new { message = dbE.Message });
             }
+            catch (ApplicationException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
+        }
+
+        public IActionResult Error(string message)
+        {
+            var viewModel = new ErrorViewModel { Message = message, RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier };
+            return View(viewModel);
         }
     }
 }
