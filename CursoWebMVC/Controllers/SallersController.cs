@@ -22,41 +22,41 @@ namespace CursoWebMVC.Controllers
             _sallerService = sallerService;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<Saller> list = _sallerService.findAll();
+            IEnumerable<Saller> list = await _sallerService.findAllAsync();
             return View(list);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var departments = _departmentService.FindAll();
+            var departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Saller saller)
+        public async Task<IActionResult> Create(Saller saller)
         {
             if (!ModelState.IsValid)
             {
-                var departments = _departmentService.FindAll();
+                var departments = await _departmentService.FindAllAsync();
                 var viewModel = new SellerFormViewModel { Departments = departments, Saller = saller };
                 return View(viewModel);
             }
-            _sallerService.Insert(saller);
+            await _sallerService.InsertAsync(saller);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided"});
             }
 
-            var obj = _sallerService.FindById(id.Value);
+            var obj = await _sallerService.FindByIdAsync(id.Value);
             if(obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -67,20 +67,20 @@ namespace CursoWebMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _sallerService.Remove(id);
+            await _sallerService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _sallerService.FindById(id.Value);
+            var obj = await _sallerService.FindByIdAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -89,31 +89,31 @@ namespace CursoWebMVC.Controllers
             return View(obj);
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
 
-            var obj = _sallerService.FindById(id.Value);
+            var obj = await _sallerService.FindByIdAsync(id.Value);
             if(obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
 
-            List<Department> departments = _departmentService.FindAll();
+            List<Department> departments = await _departmentService.FindAllAsync();
             SellerFormViewModel viewModel = new SellerFormViewModel { Saller = obj, Departments = departments };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Saller saller)
+        public async Task<IActionResult> Edit(int id, Saller saller)
         {
             if (!ModelState.IsValid)
             {
-                var departments = _departmentService.FindAll();
+                var departments = await _departmentService.FindAllAsync();
                 var viewModel = new SellerFormViewModel { Departments = departments, Saller = saller };
                 return View(viewModel);
             }
@@ -124,7 +124,7 @@ namespace CursoWebMVC.Controllers
 
             try
             {
-                _sallerService.Update(saller);
+                await _sallerService.UpdateAsync(saller);
                 return RedirectToAction(nameof(Index));
             }
             catch(NotFoundException e)
